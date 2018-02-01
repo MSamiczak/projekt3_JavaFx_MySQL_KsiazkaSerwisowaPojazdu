@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Text?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.FuelController">
+  <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="10.0" prefWidth="20.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="200.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="200.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="200.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="10.0" prefWidth="20.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="30.0" minHeight="6.0" prefHeight="30.0" vgrow="ALWAYS" />
+      <RowConstraints minHeight="10.0" prefHeight="106.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <MenuBar GridPane.columnSpan="5" GridPane.vgrow="ALWAYS">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
+         <children>
+            <Label layoutY="6.0" text="Twoje pojazdy:" />
+            <Button layoutX="487.0" layoutY="223.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="75.0" text="Tankuj!" textAlignment="CENTER" wrapText="true" />
+            <ComboBox layoutY="30.0" prefHeight="25.0" prefWidth="100.0" promptText="Wybór pojazdu" />
+            <Label layoutX="2.0" layoutY="65.0" text="Paliwo:" />
+            <RadioButton layoutX="4.0" layoutY="93.0" mnemonicParsing="false" selected="true" text="95">
+               <toggleGroup>
+                  <ToggleGroup fx:id="f1" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton layoutX="46.0" layoutY="93.0" mnemonicParsing="false" text="98" toggleGroup="$f1" />
+            <RadioButton layoutX="85.0" layoutY="93.0" mnemonicParsing="false" text="ON" toggleGroup="$f1" />
+            <RadioButton layoutX="133.0" layoutY="93.0" mnemonicParsing="false" text="LPG" toggleGroup="$f1" />
+            <TextField disable="true" layoutX="5.0" layoutY="122.0" promptText="Inne" />
+            <Label layoutX="3.0" layoutY="157.0" text="Stacja Paliw:" />
+            <ComboBox layoutY="185.0" prefHeight="25.0" prefWidth="149.0" promptText="Stacja" />
+            <CheckBox layoutX="133.0" layoutY="157.0" mnemonicParsing="false" text="Inna" />
+            <TextField disable="true" layoutX="-4.0" layoutY="248.0" prefHeight="25.0" prefWidth="100.0" promptText="Podaj nazwę" />
+            <Label layoutX="253.0" layoutY="4.0" text="Data:" />
+            <Label layoutX="368.0" layoutY="4.0" text="Kwota:" />
+            <TextField layoutX="252.0" layoutY="29.0" prefHeight="25.0" prefWidth="100.0" />
+            <TextField layoutX="367.0" layoutY="29.0" prefHeight="25.0" prefWidth="100.0" />
+            <Label layoutX="250.0" layoutY="74.0" text="Cena za litr:" />
+            <Label layoutX="367.0" layoutY="60.0" prefHeight="51.0" prefWidth="160.0" text="Dystans od poprzedniego tankowania:" wrapText="true" />
+            <TextField layoutX="252.0" layoutY="101.0" prefHeight="25.0" prefWidth="100.0" />
+            <TextField layoutX="367.0" layoutY="101.0" prefHeight="25.0" prefWidth="100.0" />
+            <Label layoutX="255.0" layoutY="149.0" text="Raport:" />
+            <RadioButton layoutX="177.0" layoutY="93.0" mnemonicParsing="false" text="Inne" toggleGroup="$f1" />
+            <Button fx:id="btn_home" layoutX="487.0" layoutY="286.0" mnemonicParsing="false" onMouseClicked="#goBack" prefHeight="50.0" prefWidth="75.0" text="Ekran Główny" textAlignment="CENTER" wrapText="true" />
+            <Label layoutX="255.0" layoutY="210.0" prefHeight="34.0" prefWidth="125.0" text="Średnie koszty paliwa w ostatnim miesiącu:" wrapText="true" />
+            <Label layoutX="255.0" layoutY="179.0" text="Średnie spalanie l/100 km:" />
+            <Label disable="true" layoutX="1.0" layoutY="227.0" text="Miasto:" />
+            <Label disable="true" layoutX="119.0" layoutY="229.0" text="Nazwa:" />
+            <TextField disable="true" layoutX="114.0" layoutY="248.0" prefHeight="25.0" prefWidth="100.0" promptText="Podaj nazwę" />
+            <Label disable="true" layoutX="-1.0" layoutY="284.0" text="Ulica, charakterystyczne miejsce:" />
+            <TextField layoutY="310.0" promptText="Np. koło Biedronki" />
+            <Text layoutX="417.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <Text layoutX="417.0" layoutY="242.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <Button layoutX="120.0" layoutY="29.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="75.0" text="Raport" textAlignment="CENTER" wrapText="true" />
+         </children>
+      </AnchorPane>
+   </children>
+</GridPane>

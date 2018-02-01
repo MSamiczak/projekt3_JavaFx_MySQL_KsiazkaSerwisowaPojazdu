@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.NewCarController">
+  <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="10.0" prefWidth="20.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="200.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="200.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="200.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="10.0" prefWidth="20.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="30.0" minHeight="6.0" prefHeight="30.0" vgrow="ALWAYS" />
+      <RowConstraints minHeight="10.0" prefHeight="106.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <MenuBar GridPane.columnSpan="5" GridPane.vgrow="ALWAYS">
+        <menus>
+          <Menu mnemonicParsing="false" text="Plik">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Konto" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
+         <children>
+            <TextField fx:id="tf_brand" layoutY="27.0" prefHeight="25.0" prefWidth="100.0" />
+            <TextField fx:id="tf_model" layoutX="116.0" layoutY="27.0" prefHeight="25.0" prefWidth="100.0" />
+            <TextField fx:id="tf_plate" layoutX="239.0" layoutY="27.0" prefHeight="25.0" prefWidth="100.0" />
+            <TextField fx:id="tf_vin" layoutX="357.0" layoutY="27.0" prefHeight="25.0" prefWidth="100.0" />
+            <TextField fx:id="tf_color" layoutX="478.0" layoutY="27.0" prefHeight="25.0" prefWidth="100.0" />
+            <TextField fx:id="tf_capacity" layoutY="95.0" prefHeight="25.0" prefWidth="100.0" />
+            <TextField fx:id="tf_power" layoutX="116.0" layoutY="95.0" prefHeight="25.0" prefWidth="45.0" />
+            <TextField fx:id="tf_engineNum" layoutX="357.0" layoutY="95.0" prefHeight="25.0" prefWidth="100.0" />
+            <TextField fx:id="tf_year" layoutY="160.0" prefHeight="25.0" prefWidth="100.0" />
+            <TextField fx:id="tf_datePur" layoutX="116.0" layoutY="160.0" prefHeight="25.0" prefWidth="100.0" />
+            <TextField fx:id="tf_price" layoutX="239.0" layoutY="160.0" prefHeight="25.0" prefWidth="100.0" />
+            <TextField fx:id="tf_distPur" layoutX="357.0" layoutY="160.0" prefHeight="25.0" prefWidth="100.0" />
+            <TextField fx:id="tf_distPresent" layoutX="473.0" layoutY="160.0" prefHeight="25.0" prefWidth="100.0" />
+            <Label layoutX="9.0" layoutY="200.0" text="Właściciel:" />
+            <CheckBox layoutX="97.0" layoutY="200.0" mnemonicParsing="false" text="Współwłaściciele" />
+            <Label layoutX="250.0" layoutY="200.0" text="Uwagi:" />
+            <Label layoutY="6.0" text="Marka:" />
+            <Label layoutX="121.0" layoutY="6.0" text="Model:" />
+            <Label layoutX="239.0" layoutY="6.0" text="Nr rejestracji:" />
+            <Label layoutX="357.0" layoutY="6.0" text="Nr nadwozia (VIN):" />
+            <Label layoutX="478.0" layoutY="6.0" text="Kolor:" />
+            <Label layoutY="71.0" text="Poj. silnika [ccm]:" />
+            <Label layoutX="121.0" layoutY="71.0" text="Moc silnika:" />
+            <Label layoutX="239.0" layoutY="71.0" text="Typ silnika:" />
+            <Label layoutX="357.0" layoutY="71.0" text="Nr silnika:" />
+            <Label layoutY="136.0" text="Rok produkcji:" />
+            <Label layoutX="115.0" layoutY="136.0" text="Data zakupu:" />
+            <Label layoutX="239.0" layoutY="136.0" text="Cena zakupu:" />
+            <Label layoutX="357.0" layoutY="136.0" text="Przebieg - zakup:" />
+            <ComboBox fx:id="cmb_powerUnit" layoutX="161.0" layoutY="95.0" prefHeight="25.0" prefWidth="55.0" />
+            <ComboBox fx:id="cmb_engineType" layoutX="239.0" layoutY="95.0" prefHeight="25.0" prefWidth="100.0" />
+            <TextField layoutX="15.0" layoutY="228.0" prefHeight="25.0" prefWidth="200.0" />
+            <TextField disable="true" layoutX="15.0" layoutY="269.0" prefHeight="25.0" prefWidth="200.0" />
+            <TextField disable="true" layoutX="15.0" layoutY="310.0" prefHeight="25.0" prefWidth="200.0" />
+            <TextArea fx:id="ta_desc" layoutX="226.0" layoutY="228.0" prefHeight="122.0" prefWidth="240.0" />
+            <Button fx:id="btn_addToDB" layoutX="485.0" layoutY="228.0" mnemonicParsing="false" onMouseClicked="#addToDB" prefHeight="50.0" prefWidth="75.0" text="Dodaj " textAlignment="CENTER" />
+            <Button fx:id="btn_home" layoutX="485.0" layoutY="298.0" mnemonicParsing="false" onMouseClicked="#goBack" prefHeight="50.0" prefWidth="75.0" text="Ekran Główny" textAlignment="CENTER" wrapText="true" />
+            <Label layoutX="475.0" layoutY="136.0" text="Przebieg - obecny:" />
+         </children>
+      </AnchorPane>
+   </children>
+</GridPane>

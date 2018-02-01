@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.RepetitiveController">
+  <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="10.0" prefWidth="20.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="200.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="200.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="200.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="10.0" prefWidth="20.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="30.0" minHeight="6.0" prefHeight="30.0" vgrow="ALWAYS" />
+      <RowConstraints minHeight="10.0" prefHeight="106.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <MenuBar GridPane.columnSpan="5" GridPane.vgrow="ALWAYS">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
+         <children>
+            <ComboBox layoutY="23.0" prefWidth="150.0" promptText="Wybierz pojazd" />
+            <Button fx:id="btn_home" layoutX="481.0" layoutY="291.0" mnemonicParsing="false" onMouseClicked="#goBack" prefHeight="50.0" prefWidth="75.0" text="Ekran Główny" textAlignment="CENTER" wrapText="true" />
+            <Label layoutX="8.0" layoutY="6.0" text="Czynności cykliczne:" />
+            <Label layoutY="78.0" text="Ubezpieczenie OC:" />
+            <Label layoutX="4.0" layoutY="132.0" text="Przegląd samochodu:" />
+            <Label layoutX="4.0" layoutY="195.0" text="Wymiana oleju:" />
+            <CheckBox layoutX="4.0" layoutY="239.0" mnemonicParsing="false" text="Własne" />
+            <TextField layoutX="152.0" layoutY="74.0" prefHeight="25.0" prefWidth="100.0" />
+            <Label layoutX="152.0" layoutY="57.0" text="Ważne od:" />
+            <TextField layoutX="362.0" layoutY="74.0" prefHeight="25.0" prefWidth="99.0" />
+            <Label layoutX="333.0" layoutY="57.0" text="Okres ważności w miesiącach:" />
+            <TextField layoutX="152.0" layoutY="128.0" prefHeight="25.0" prefWidth="100.0" />
+            <Label layoutX="152.0" layoutY="111.0" text="Data ostatniego przeglądu:" />
+            <TextField layoutX="362.0" layoutY="128.0" prefHeight="25.0" prefWidth="99.0" />
+            <Label layoutX="333.0" layoutY="111.0" text="Okres ważności w miesiącach:" />
+            <TextField layoutX="150.0" layoutY="190.0" prefHeight="25.0" prefWidth="100.0" />
+            <TextField layoutX="296.0" layoutY="190.0" prefHeight="25.0" prefWidth="100.0" />
+            <TextField layoutX="418.0" layoutY="191.0" prefHeight="25.0" prefWidth="100.0" />
+            <Label layoutX="152.0" layoutY="168.0" text="Data ostatniej wymiany:" wrapText="true" />
+            <Label layoutX="299.0" layoutY="168.0" text="Stan licznika:" />
+            <Label layoutX="418.0" layoutY="168.0" text="Zalecenia producenta [km]:" />
+            <CheckBox layoutX="524.0" layoutY="194.0" mnemonicParsing="false" />
+            <TextField disable="true" layoutY="271.0" prefHeight="25.0" prefWidth="100.0" promptText="Nazwa" />
+            <TextField disable="true" layoutY="312.0" prefHeight="25.0" prefWidth="100.0" promptText="Data ostatniej" />
+            <TextField disable="true" layoutX="141.0" layoutY="272.0" prefHeight="25.0" prefWidth="100.0" promptText="Co ile msc" />
+            <TextField disable="true" layoutX="141.0" layoutY="312.0" prefHeight="25.0" prefWidth="100.0" promptText="Co ile km" />
+            <TextField disable="true" layoutX="299.0" layoutY="271.0" prefHeight="25.0" prefWidth="100.0" promptText="Stan licznika" />
+            <Button layoutX="481.0" layoutY="231.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="75.0" text="Dodaj" textAlignment="CENTER" wrapText="true" />
+            <CheckBox disable="true" layoutX="408.0" layoutY="276.0" mnemonicParsing="false" />
+            <RadioButton disable="true" layoutX="252.0" layoutY="276.0" mnemonicParsing="false" prefWidth="29.0" selected="true" />
+            <RadioButton disable="true" layoutX="252.0" layoutY="316.0" mnemonicParsing="false" prefWidth="29.0" />
+         </children>
+      </AnchorPane>
+   </children>
+</GridPane>
