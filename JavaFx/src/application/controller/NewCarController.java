@@ -67,11 +67,6 @@ public class NewCarController {
 	private TextArea ta_desc;
 
 	@FXML
-	private ComboBox<String> cmb_powerUnit;
-
-	ObservableList<String> powerUnit;
-
-	@FXML
 	private ComboBox<String> cmb_engineType;
 
 	ObservableList<String> engineType;
@@ -86,22 +81,32 @@ public class NewCarController {
 
 		int idcars = 0;
 		String brand = tf_brand.getText();
+		String model = tf_model.getText();
 		String plate = tf_plate.getText();
 		String vin = tf_vin.getText();
 		String color = tf_color.getText();
-		String capacity = tf_capacity.getText();
-		String power = tf_power.getText();
-		String engine_power_unit = cmb_powerUnit.getValue(); //dodac if else z przelicznikiem
+		
+		String capacitySt = tf_capacity.getText();
+		Double capacity = Double.parseDouble(capacitySt);
+		
+		String powerSt = tf_power.getText();
+		Double power = Double.parseDouble(powerSt);
+		
 		String engine_type = cmb_engineType.getValue();
 		String engine_num = tf_engineNum.getText();
 		String production_year = tf_year.getText(); // jak pobieraæ inty i floaty z Textfield
 		String date_purchase = tf_datePur.getText();
-		String price = tf_price.getText();
-		String distance_purchase = tf_distPur.getText();
-		String distance_present = tf_distPresent.getText();
+		
+		String priceSt = tf_price.getText();
+		Double price = Double.parseDouble(priceSt);
+		
+		String distance_purchaseSt = tf_distPur.getText();
+		Integer distance_purchase = Integer.decode(distance_purchaseSt);
+		String distance_presentSt = tf_distPresent.getText();
+		Integer distance_present = Integer.decode(distance_presentSt);
 		String desc = ta_desc.getText();
 
-		Cars cars = new Cars(idcars, brand, plate, vin, color, capacity, power, engine_power_unit, engine_type,
+		Cars cars = new Cars(idcars, brand, model, plate, vin, color, capacity, power, engine_type,
 				engine_num, production_year, date_purchase, price, distance_purchase, distance_present, desc);
 
 		return cars;
@@ -116,26 +121,26 @@ public class NewCarController {
 			connection = db.connection();
 
 			PreparedStatement ps = connection.prepareStatement(
-					"INSERT INTO cars " + "( idcars, brand, plate, vin, color, capacity, power, engine_pow_unit,"
+					"INSERT INTO cars " + "( idcars, brand, model, plate, vin, color, capacity, power,"
 							+ "engine_type, engine_num, production_year, date_purchase, price, distance_purchase,"
 							+ "distance_present, description) " + " VALUES ( ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? );");
 
 			Cars cars = mapToCars();
 			ps.setString(1, "0");
 			ps.setString(2, cars.getBrand());
-			ps.setString(3, cars.getPlate());
-			ps.setString(4, cars.getVin());
-			ps.setString(5, cars.getColor());
-			ps.setString(6, cars.getCapacity());
-			ps.setString(7, cars.getPower());
-			ps.setString(8, cars.getEngine_power_unit());
+			ps.setString(3, cars.getModel());
+			ps.setString(4, cars.getPlate());
+			ps.setString(5, cars.getVin());
+			ps.setString(6, cars.getColor());
+			ps.setString(7, String.valueOf(cars.getCapacity()));
+			ps.setString(8, String.valueOf(cars.getPower()));
 			ps.setString(9, cars.getEngine_type());
 			ps.setString(10, cars.getEngine_num());
 			ps.setString(11, cars.getProduction_year());
 			ps.setString(12, cars.getDate_purchase());
-			ps.setString(13, cars.getPrice());
-			ps.setString(14, cars.getDistance_purchase());
-			ps.setString(15, cars.getDistance_present());
+			ps.setString(13, String.valueOf(cars.getPrice()));
+			ps.setString(14, String.valueOf(cars.getDistance_purchase()));
+			ps.setString(15, String.valueOf(cars.getDistance_present()));
 			ps.setString(16, cars.getDesc());
 
 			ps.executeUpdate();
@@ -170,9 +175,6 @@ public class NewCarController {
 	}
 
 	public void initialize() {
-
-		powerUnit = FXCollections.observableArrayList("KM", "kW");
-		cmb_powerUnit.setItems(powerUnit);
 
 		engineType = FXCollections.observableArrayList("Benzyna", "Diesel");
 		cmb_engineType.setItems(engineType);

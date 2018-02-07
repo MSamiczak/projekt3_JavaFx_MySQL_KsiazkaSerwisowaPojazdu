@@ -3,6 +3,7 @@ package application.controller;
 import java.io.IOException;
 
 import application.Main;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -84,5 +85,17 @@ public class MainController {
     	Main.getPrimaryStage().setScene(scene);
 
     }
+    
 
+    @FXML
+    void goToAcount(ActionEvent event) throws IOException {
+
+    
+    
+    Parent parent = FXMLLoader.load(getClass().getResource("/application/view/View8_CarsTableView.fxml"));
+
+		Scene scene = new Scene(parent);
+		Main.getPrimaryStage().setScene(scene);
+    
+}
 }

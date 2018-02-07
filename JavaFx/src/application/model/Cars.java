@@ -3,34 +3,41 @@ package application.model;
 public class Cars {
 
 	private int idcars;
+	
 	private String brand;
+	private String model;
 	private String plate;
+	
 	private String vin;
 	private String color;
-	private String capacity;
-	private String power;
-	private String engine_power_unit;
+	
+	private Double capacity;
+	private Double power;
+	
 	private String engine_type;
 	private String engine_num;
 	private String production_year;
 	private String date_purchase;
-	private String price;
-	private String distance_purchase;
-	private String distance_present;
+	
+	private Double price;
+	
+	private int distance_purchase;
+	private int distance_present;
+	
 	private String desc;
 
-	public Cars(int idcars, String brand, String plate, String vin, String color, String capacity, String power,
-			String engine_power_unit, String engine_type, String engine_num, String production_year,
-			String date_purchase, String price, String distance_purchase, String distance_present, String desc) {
+	public Cars(int idcars, String brand, String model, String plate, String vin, String color, Double capacity,
+			Double power, String engine_type, String engine_num, String production_year,
+			String date_purchase, Double price, int distance_purchase, int distance_present, String desc) {
 		super();
 		this.idcars = idcars;
 		this.brand = brand;
+		this.model = model;
 		this.plate = plate;
 		this.vin = vin;
 		this.color = color;
 		this.capacity = capacity;
 		this.power = power;
-		this.engine_power_unit = engine_power_unit;
 		this.engine_type = engine_type;
 		this.engine_num = engine_num;
 		this.production_year = production_year;
@@ -39,8 +46,45 @@ public class Cars {
 		this.distance_purchase = distance_purchase;
 		this.distance_present = distance_present;
 		this.desc = desc;
-
 	}
+	
+	
+	public Cars(int idcars, String brand, String model, String plate, String color, Double capacity, Double power,
+			String engine_type) {
+		super();
+		this.idcars = idcars;
+		this.brand = brand;
+		this.model = model;
+		this.plate = plate;
+		this.color = color;
+		this.capacity = capacity;
+		this.power = power;
+		this.engine_type = engine_type;
+	}
+
+
+	public Cars(String vin, String engine_num, String production_year, String date_purchase, Double price,
+			int distance_purchase, int distance_present) {
+		super();
+		this.vin = vin;
+		this.engine_num = engine_num;
+		this.production_year = production_year;
+		this.date_purchase = date_purchase;
+		this.price = price;
+		this.distance_purchase = distance_purchase;
+		this.distance_present = distance_present;
+	}
+	
+	
+	
+	
+
+
+	public Cars(String desc) {
+		super();
+		this.desc = desc;
+	}
+
 
 	public int getIdcars() {
 		return idcars;
@@ -56,6 +100,14 @@ public class Cars {
 
 	public void setBrand(String brand) {
 		this.brand = brand;
+	}
+
+	public String getModel() {
+		return model;
+	}
+
+	public void setModel(String model) {
+		this.model = model;
 	}
 
 	public String getPlate() {
@@ -82,28 +134,20 @@ public class Cars {
 		this.color = color;
 	}
 
-	public String getCapacity() {
+	public Double getCapacity() {
 		return capacity;
 	}
 
-	public void setCapacity(String capacity) {
+	public void setCapacity(Double capacity) {
 		this.capacity = capacity;
 	}
 
-	public String getPower() {
+	public Double getPower() {
 		return power;
 	}
 
-	public void setPower(String power) {
+	public void setPower(Double power) {
 		this.power = power;
-	}
-
-	public String getEngine_power_unit() {
-		return engine_power_unit;
-	}
-
-	public void setEngine_power_unit(String engine_power_unit) {
-		this.engine_power_unit = engine_power_unit;
 	}
 
 	public String getEngine_type() {
@@ -138,27 +182,27 @@ public class Cars {
 		this.date_purchase = date_purchase;
 	}
 
-	public String getPrice() {
+	public Double getPrice() {
 		return price;
 	}
 
-	public void setPrice(String price) {
+	public void setPrice(Double price) {
 		this.price = price;
 	}
 
-	public String getDistance_purchase() {
+	public int getDistance_purchase() {
 		return distance_purchase;
 	}
 
-	public void setDistance_purchase(String distance_purchase) {
+	public void setDistance_purchase(int distance_purchase) {
 		this.distance_purchase = distance_purchase;
 	}
 
-	public String getDistance_present() {
+	public int getDistance_present() {
 		return distance_present;
 	}
 
-	public void setDistance_present(String distance_present) {
+	public void setDistance_present(int distance_present) {
 		this.distance_present = distance_present;
 	}
 
@@ -169,5 +213,8 @@ public class Cars {
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
+	
 
 }
+
+	
