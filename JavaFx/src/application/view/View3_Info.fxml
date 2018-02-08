@@ -56,12 +56,15 @@
             <Button fx:id="btn_home" layoutX="492.0" layoutY="299.0" mnemonicParsing="false" onMouseClicked="#goBack" prefHeight="50.0" prefWidth="75.0" text="Ekran Główny" textAlignment="CENTER" wrapText="true" />
             <Label layoutX="14.0" layoutY="168.0" text="Raport:" />
             <Label layoutX="15.0" layoutY="14.0" text="Informacje o pojeździe" />
-            <CheckBox layoutX="310.0" layoutY="45.0" mnemonicParsing="false" text="Kopia Raportu" />
-            <RadioButton disable="true" layoutX="282.0" layoutY="192.0" mnemonicParsing="false" text="Wyślij Mailem" />
-            <RadioButton disable="true" layoutX="398.0" layoutY="192.0" mnemonicParsing="false" text="Zapis do pliku" />
-            <TextField disable="true" layoutX="282.0" layoutY="220.0" prefHeight="25.0" prefWidth="215.0" promptText="Podaj adres e-mail" />
-            <Button disable="true" layoutX="282.0" layoutY="258.0" mnemonicParsing="false" text="Wyślij" />
-            <Button disable="true" layoutX="405.0" layoutY="258.0" mnemonicParsing="false" text="Zapisz" />
+            <CheckBox fx:id="cb_copy" layoutX="310.0" layoutY="45.0" mnemonicParsing="false" onAction="#onCopy" text="Kopia Raportu" />
+            <RadioButton fx:id="rb_sendMail" disable="true" layoutX="282.0" layoutY="192.0" mnemonicParsing="false" onAction="#onMail" text="Wyślij Mailem">
+               <toggleGroup>
+                  <ToggleGroup fx:id="g3" />
+               </toggleGroup></RadioButton>
+            <RadioButton fx:id="rb_saveToFile" disable="true" layoutX="398.0" layoutY="192.0" mnemonicParsing="false" onAction="#onSave" text="Zapis do pliku" toggleGroup="$g3" />
+            <TextField fx:id="tf_mail" disable="true" layoutX="282.0" layoutY="220.0" prefHeight="25.0" prefWidth="215.0" promptText="Podaj adres e-mail" />
+            <Button fx:id="btn_send" disable="true" layoutX="282.0" layoutY="258.0" mnemonicParsing="false" onMouseClicked="#sendMail" text="Wyślij" />
+            <Button fx:id="btn_save" disable="true" layoutX="405.0" layoutY="258.0" mnemonicParsing="false" onMouseClicked="#saveFile" text="Zapisz" />
             <RadioButton fx:id="rb_all" layoutX="17.0" layoutY="79.0" mnemonicParsing="false" onAction="#selectAll" selected="true" text="Wszystko">
                <toggleGroup>
                   <ToggleGroup fx:id="g1" />
