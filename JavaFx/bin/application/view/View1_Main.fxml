@@ -5,7 +5,9 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioMenuItem?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -21,17 +23,28 @@
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="10.0" prefWidth="20.0" />
   </columnConstraints>
   <rowConstraints>
+    <RowConstraints />
     <RowConstraints maxHeight="30.0" minHeight="6.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="313.0" minHeight="10.0" prefHeight="106.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="250.0" minHeight="10.0" prefHeight="250.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="313.0" minHeight="10.0" prefHeight="106.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="250.0" minHeight="10.0" prefHeight="250.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <MenuBar GridPane.columnSpan="5">
+      <MenuBar GridPane.columnSpan="5" GridPane.rowIndex="1">
         <menus>
-          <Menu mnemonicParsing="false" text="Plik">
+          <Menu mnemonicParsing="false" text="Konto">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#goToAcount" text="Konto" />
+                  <Menu mnemonicParsing="false" text="Zarządzanie Danymi">
+                     <items>
+                        <RadioMenuItem fx:id="rmi_basicInfoTBL" mnemonicParsing="false" onAction="#goBasicInfoTBL" text="Charakterystyka pojazdów">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="g2" />
+                           </toggleGroup>
+                        </RadioMenuItem>
+                        <RadioMenuItem fx:id="rmi_technicInfoTBL" mnemonicParsing="false" onAction="#goTechInfoTBL" text="Dane techniczne pojazdów" toggleGroup="$g2" />
+                        <RadioMenuItem fx:id="rmi_seriviceBookTBL" mnemonicParsing="false" onAction="#goServiceTBL" text="Książka Serwisowa" toggleGroup="$g2" />
+                     </items>
+                  </Menu>
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
@@ -41,7 +54,7 @@
           </Menu>
         </menus>
       </MenuBar>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
          <children>
             <Label layoutX="73.0" layoutY="23.0" text="Pojazd 1" />
             <Label layoutX="10.0" layoutY="95.0" text="OC:" />
@@ -53,22 +66,20 @@
             <Label alignment="CENTER" layoutX="72.0" layoutY="40.0" text="ASTRA III" />
          </children>
       </AnchorPane>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2">
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3">
          <children>
             <Separator layoutX="-2.0" layoutY="32.0" prefHeight="0.0" prefWidth="583.0" />
          </children>
       </AnchorPane>
-      <AnchorPane prefHeight="200.0" prefWidth="600.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
+      <AnchorPane prefHeight="119.0" prefWidth="576.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2">
          <children>
-            <Button fx:id="btn_newCar" layoutX="10.0" layoutY="20.0" mnemonicParsing="false" onMouseClicked="#goAddCar" prefHeight="75.0" prefWidth="75.0" text="Nowy pojazd +" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" wrapText="true" />
-            <Button fx:id="btn_info" layoutX="99.0" layoutY="20.0" mnemonicParsing="false" onMouseClicked="#goInfo" prefHeight="75.0" prefWidth="75.0" text="Informacje o pojazdach" textAlignment="CENTER" wrapText="true" />
-            <Button fx:id="btn_fuel" layoutX="196.0" layoutY="20.0" mnemonicParsing="false" onMouseClicked="#goFuel" prefHeight="75.0" prefWidth="75.0" text="Tankuj pojazd" textAlignment="CENTER" wrapText="true" />
-            <Button fx:id="btn_repetitive" layoutX="389.0" layoutY="20.0" mnemonicParsing="false" onMouseClicked="#goRepetitive" prefHeight="75.0" prefWidth="75.0" text="Czynności cykliczne" textAlignment="CENTER" wrapText="true" />
-            <Button fx:id="btn_newService" layoutX="296.0" layoutY="20.0" mnemonicParsing="false" onMouseClicked="#goService" prefHeight="75.0" prefWidth="75.0" text="Dodaj czynność" textAlignment="CENTER" wrapText="true" />
-            <Button fx:id="btn_repetitive1" layoutX="487.0" layoutY="20.0" mnemonicParsing="false" onMouseClicked="#goRepetitive" prefHeight="75.0" prefWidth="75.0" textAlignment="CENTER" wrapText="true" />
+            <Button fx:id="btn_newCar" layoutX="118.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#goAddCar" prefHeight="75.0" prefWidth="85.0" text="Nowy pojazd +" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" wrapText="true" AnchorPane.topAnchor="27.0" />
+            <Button fx:id="btn_info" layoutX="288.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#goInfo" prefHeight="75.0" prefWidth="85.0" text="Informacje o pojazdach" textAlignment="CENTER" wrapText="true" AnchorPane.topAnchor="27.0" />
+            <Button fx:id="btn_newService" layoutX="203.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#goService" prefHeight="75.0" prefWidth="85.0" text="Nowa naprawa +" textAlignment="CENTER" wrapText="true" AnchorPane.topAnchor="27.0" />
+            <Button fx:id="btn_serviceHistory" layoutX="373.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#goHistory" prefHeight="75.0" prefWidth="85.0" text="Historia Serwisowa" textAlignment="CENTER" wrapText="true" AnchorPane.topAnchor="27.0" />
          </children>
       </AnchorPane>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
          <children>
             <Label layoutX="73.0" layoutY="23.0" text="Pojazd 1" />
             <Label layoutX="10.0" layoutY="95.0" text="OC:" />
@@ -78,9 +89,10 @@
             <Text layoutX="72.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0" text="123556 km" />
             <Label layoutX="10.0" layoutY="135.0" text="Przegląd:" />
             <Label alignment="CENTER" layoutX="72.0" layoutY="40.0" text="ASTRA III" />
+            <Button fx:id="btn_repetitive" layoutX="78.0" layoutY="57.0" mnemonicParsing="false" onMouseClicked="#goRepetitive" prefHeight="17.0" prefWidth="61.0" text="Czynności cykliczne" textAlignment="CENTER" visible="false" wrapText="true" />
          </children>
       </AnchorPane>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
          <children>
             <Label layoutX="73.0" layoutY="23.0" text="Pojazd 1" />
             <Label layoutX="10.0" layoutY="95.0" text="OC:" />
@@ -90,6 +102,7 @@
             <Text layoutX="72.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0" text="123556 km" />
             <Label layoutX="10.0" layoutY="135.0" text="Przegląd:" />
             <Label alignment="CENTER" layoutX="72.0" layoutY="40.0" text="ASTRA III" />
+            <Button fx:id="btn_fuel" layoutX="78.0" layoutY="57.0" mnemonicParsing="false" onMouseClicked="#goFuel" prefHeight="24.0" prefWidth="57.0" text="Tankuj pojazd" textAlignment="CENTER" visible="false" wrapText="true" />
          </children>
       </AnchorPane>
    </children>

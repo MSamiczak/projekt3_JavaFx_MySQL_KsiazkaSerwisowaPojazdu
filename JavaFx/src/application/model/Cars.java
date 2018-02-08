@@ -49,41 +49,38 @@ public class Cars {
 	}
 	
 	
-	public Cars(int idcars, String brand, String model, String plate, String color, Double capacity, Double power,
-			String engine_type) {
+	
+	
+	
+	
+
+
+	public Cars(int idcars, String brand, String model, String plate, String color, String production_year,
+			String date_purchase, Double price) {
 		super();
 		this.idcars = idcars;
 		this.brand = brand;
 		this.model = model;
 		this.plate = plate;
 		this.color = color;
-		this.capacity = capacity;
-		this.power = power;
-		this.engine_type = engine_type;
-	}
-
-
-	public Cars(String vin, String engine_num, String production_year, String date_purchase, Double price,
-			int distance_purchase, int distance_present) {
-		super();
-		this.vin = vin;
-		this.engine_num = engine_num;
 		this.production_year = production_year;
 		this.date_purchase = date_purchase;
 		this.price = price;
-		this.distance_purchase = distance_purchase;
-		this.distance_present = distance_present;
 	}
 	
-	
-	
-	
-
-
-	public Cars(String desc) {
+	public Cars(int idcars, String desc) {
 		super();
+		this.idcars = idcars;
 		this.desc = desc;
 	}
+
+	
+	
+
+
+
+
+
 
 
 	public int getIdcars() {

@@ -144,6 +144,7 @@ public class NewCarController {
 			ps.setString(16, cars.getDesc());
 
 			ps.executeUpdate();
+//			clearAll();
 		
 
 			// clearAll();

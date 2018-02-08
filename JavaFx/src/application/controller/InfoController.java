@@ -167,6 +167,7 @@ public class InfoController {
 		String plate = cars.get(0).getPlate();
 		
 		String vin = "";
+		String vinF = cars.get(0).getVin();
 		String color = "";
 
 		String capacity = "";
@@ -185,11 +186,13 @@ public class InfoController {
 		String desc = "";
 		
 		
+		
+		//########## BRAK wyswietlania dla wszystkich, stworzyc now¹ zmienna
 		if(rb_all.isSelected()) {
 			 
 			return "# Marka: "+brand+"\n# Model: "+model+"\n# Nr rejestracji: "+plate+ "\n# Kolor: "+color+
 					"\n# Pojemnoœæ silnika: "+capacity+ "\n# Moc silnika [KM]: " + power +"\n# Typ silnika: "+ 
-					engine_type + "\n# Nr silnika: " + engine_num+ "\n# VIN: " + vin+"\n# Rok produkcji: " + production_year+
+					engine_type + "\n# Nr silnika: " + engine_num+ "\n# VIN: " + vinF+"\n# Rok produkcji: " + production_year+
 					"\n# Data zakupu: " +date_purchase+ "\n# Cena zakupu: " + price+"\n# Przebieg przy zakupie: "+ 
 							distance_purchase+ "\n# Przebieg obecny: " + distance_present+"\n# Uwagi: " + desc ;
 			
@@ -238,13 +241,13 @@ public class InfoController {
 		}
 
 		return "# Marka: "+brand+"\n# Model: "+model+"\n# Nr rejestracji: "+plate+
-		(color.isEmpty() ?"" : "\n# Kolor: "+color)+ (capacity.isEmpty() ?"" : "\n# Pojemnoœæ silnika: "+capacity+
+		(color.isEmpty() ?"" : "\n# Kolor: "+color)+ (capacity.isEmpty() ?"" : "\n# Pojemnoœæ silnika: "+capacity)+
 				(power.isEmpty() ?"" : "\n# Moc silnika [KM]: " + power) + (engine_type.isEmpty() ?"" : "\n# Typ silnika: " + 
 		engine_type) + (engine_num.isEmpty() ?"" : "\n# Nr silnika: " + engine_num)+ (vin.isEmpty() ?"" : "\n# VIN: " + vin)+
 				(production_year.isEmpty() ?"" : "\n# Rok produkcji: " + production_year)+(date_purchase.isEmpty() ?"" : "\n# Data zakupu: " + 
 		date_purchase)+ (price.isEmpty() ?"" : "\n# Cena zakupu: " + price)+(distance_purchase.isEmpty() ?"" : "\n# Przebieg przy zakupie: " + 
 				distance_purchase)+ (distance_present.isEmpty() ?"" : "\n# Przebieg obecny: " + distance_present)+
-				(desc.isEmpty() ?"" : "\n# Uwagi: " + desc)) ;
+				(desc.isEmpty() ?"" : "\n# Uwagi: " + desc) ;
 		
 		
 //		return "Kontakt: \n" + name + " " + lastName + "\nmail: " + mail + "\nphone: " + phone
@@ -267,7 +270,7 @@ public class InfoController {
 	@FXML
 	void doRaport(MouseEvent event) {
 
-		String choose = cmb_chooseCar.getValue().getPlate();
+		String choose = String.valueOf(cmb_chooseCar.getValue().getIdcars());
 		Connection connection = null;
 		try {
 			connection = db.connection();
@@ -280,7 +283,7 @@ public class InfoController {
 					sql.append(" where");
 
 					
-					sql.append(" plate = " + "'" + choose + "'");
+					sql.append(" idcars = " + "'" + choose + "'");
 					System.out.println(sql);
 				
 
@@ -350,11 +353,11 @@ public class InfoController {
 
 			Statement ct = connection.createStatement();
 
-			ResultSet rs = ct.executeQuery("Select brand, plate from cars;");
+			ResultSet rs = ct.executeQuery("Select idcars, brand, plate from cars;");
 
 			while (rs.next()) {
 
-				cmb.add(new ComboListCars(rs.getString(1), rs.getString(2)));
+				cmb.add(new ComboListCars(rs.getInt(1), rs.getString(2), rs.getString(3)));
 
 			}
 
