@@ -73,10 +73,10 @@
       </AnchorPane>
       <AnchorPane prefHeight="119.0" prefWidth="576.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2">
          <children>
-            <Button fx:id="btn_newCar" layoutX="118.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#goAddCar" prefHeight="75.0" prefWidth="85.0" text="Nowy pojazd +" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" wrapText="true" AnchorPane.topAnchor="27.0" />
-            <Button fx:id="btn_info" layoutX="288.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#goInfo" prefHeight="75.0" prefWidth="85.0" text="Informacje o pojazdach" textAlignment="CENTER" wrapText="true" AnchorPane.topAnchor="27.0" />
-            <Button fx:id="btn_newService" layoutX="203.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#goService" prefHeight="75.0" prefWidth="85.0" text="Nowa naprawa +" textAlignment="CENTER" wrapText="true" AnchorPane.topAnchor="27.0" />
-            <Button fx:id="btn_serviceHistory" layoutX="373.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#goHistory" prefHeight="75.0" prefWidth="85.0" text="Historia Serwisowa" textAlignment="CENTER" wrapText="true" AnchorPane.topAnchor="27.0" />
+            <Button fx:id="btn_newCar" layoutX="14.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#goAddCar" prefHeight="75.0" prefWidth="85.0" text="Nowy pojazd +" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" wrapText="true" AnchorPane.topAnchor="27.0" />
+            <Button fx:id="btn_info" layoutX="246.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#goInfo" prefHeight="75.0" prefWidth="85.0" text="Informacje o pojazdach" textAlignment="CENTER" wrapText="true" AnchorPane.topAnchor="27.0" />
+            <Button fx:id="btn_newService" layoutX="131.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#goService" prefHeight="75.0" prefWidth="85.0" text="Nowa naprawa +" textAlignment="CENTER" wrapText="true" AnchorPane.topAnchor="27.0" />
+            <Button fx:id="btn_serviceHistory" layoutX="373.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#goHistory" prefHeight="75.0" prefWidth="85.0" text="Historia Serwisowa" textAlignment="CENTER" visible="false" wrapText="true" AnchorPane.topAnchor="27.0" />
          </children>
       </AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4">

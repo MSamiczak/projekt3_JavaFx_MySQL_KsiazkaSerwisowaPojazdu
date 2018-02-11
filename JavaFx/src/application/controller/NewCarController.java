@@ -94,7 +94,7 @@ public class NewCarController {
 		
 		String engine_type = cmb_engineType.getValue();
 		String engine_num = tf_engineNum.getText();
-		String production_year = tf_year.getText(); // jak pobieraæ inty i floaty z Textfield
+		String production_year = tf_year.getText(); 
 		String date_purchase = tf_datePur.getText();
 		
 		String priceSt = tf_price.getText();

@@ -50,13 +50,13 @@
       </MenuBar>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
          <children>
-            <ComboBox fx:id="cmb_chooseCar" layoutX="14.0" layoutY="41.0" prefWidth="150.0" promptText="Wybierz pojazd" />
+            <ComboBox fx:id="cmb_chooseCar" layoutX="14.0" layoutY="41.0" prefWidth="150.0" promptText="Twoje pojazdy" />
             <TextArea fx:id="ta_raport" layoutX="12.0" layoutY="192.0" prefHeight="173.0" prefWidth="253.0" />
-            <Button fx:id="btn_raport" layoutX="199.0" layoutY="41.0" mnemonicParsing="false" onMouseClicked="#doRaport" prefHeight="25.0" prefWidth="89.0" text="Raport" />
+            <Button fx:id="btn_raport" layoutX="351.0" layoutY="41.0" mnemonicParsing="false" onMouseClicked="#doRaport" prefHeight="25.0" prefWidth="89.0" text="Raport" />
             <Button fx:id="btn_home" layoutX="492.0" layoutY="299.0" mnemonicParsing="false" onMouseClicked="#goBack" prefHeight="50.0" prefWidth="75.0" text="Ekran Główny" textAlignment="CENTER" wrapText="true" />
             <Label layoutX="14.0" layoutY="168.0" text="Raport:" />
-            <Label layoutX="15.0" layoutY="14.0" text="Informacje o pojeździe" />
-            <CheckBox fx:id="cb_copy" layoutX="310.0" layoutY="45.0" mnemonicParsing="false" onAction="#onCopy" text="Kopia Raportu" />
+            <Label layoutX="15.0" layoutY="14.0" text="Wybór pojazdu:" />
+            <CheckBox fx:id="cb_copy" layoutX="462.0" layoutY="45.0" mnemonicParsing="false" onAction="#onCopy" text="Kopia Raportu" />
             <RadioButton fx:id="rb_sendMail" disable="true" layoutX="282.0" layoutY="192.0" mnemonicParsing="false" onAction="#onMail" text="Wyślij Mailem">
                <toggleGroup>
                   <ToggleGroup fx:id="g3" />
@@ -65,24 +65,35 @@
             <TextField fx:id="tf_mail" disable="true" layoutX="282.0" layoutY="220.0" prefHeight="25.0" prefWidth="215.0" promptText="Podaj adres e-mail" />
             <Button fx:id="btn_send" disable="true" layoutX="282.0" layoutY="258.0" mnemonicParsing="false" onMouseClicked="#sendMail" text="Wyślij" />
             <Button fx:id="btn_save" disable="true" layoutX="405.0" layoutY="258.0" mnemonicParsing="false" onMouseClicked="#saveFile" text="Zapisz" />
-            <RadioButton fx:id="rb_all" layoutX="17.0" layoutY="79.0" mnemonicParsing="false" onAction="#selectAll" selected="true" text="Wszystko">
-               <toggleGroup>
-                  <ToggleGroup fx:id="g1" />
-               </toggleGroup>
-            </RadioButton>
-            <RadioButton fx:id="rb_filtr" layoutX="111.0" layoutY="79.0" mnemonicParsing="false" onAction="#selectFiltr" text="Filtruj" toggleGroup="$g1" />
-            <CheckBox fx:id="cb_color" disable="true" layoutX="15.0" layoutY="118.0" mnemonicParsing="false" text="Kolor" />
-            <CheckBox fx:id="cb_engineSize" disable="true" layoutX="70.0" layoutY="118.0" mnemonicParsing="false" text="Poj. silnika" />
-            <CheckBox fx:id="cb_power" disable="true" layoutX="150.0" layoutY="118.0" mnemonicParsing="false" text="Moc silnika" />
-            <CheckBox fx:id="cb_engineType" disable="true" layoutX="243.0" layoutY="118.0" mnemonicParsing="false" text="Typ silnika" />
-            <CheckBox fx:id="cb_vin" disable="true" layoutX="406.0" layoutY="118.0" mnemonicParsing="false" text="Nr VIN" />
-            <CheckBox fx:id="cb_engineNum" disable="true" layoutX="330.0" layoutY="118.0" mnemonicParsing="false" text="Nr silnika" />
-            <CheckBox fx:id="cb_year" disable="true" layoutX="472.0" layoutY="118.0" mnemonicParsing="false" text="Rok produkcji" />
-            <CheckBox fx:id="cb_datePurch" disable="true" layoutX="14.0" layoutY="144.0" mnemonicParsing="false" text="Data zakupu" />
-            <CheckBox fx:id="cb_price" disable="true" layoutX="110.0" layoutY="144.0" mnemonicParsing="false" text="Kwota zakupu" />
-            <CheckBox fx:id="cb_distanceBef" disable="true" layoutX="213.0" layoutY="144.0" mnemonicParsing="false" text="Przebieg przy zakupie" />
-            <CheckBox fx:id="cb_distanceCur" disable="true" layoutX="358.0" layoutY="144.0" mnemonicParsing="false" text="Przebieg obecny" />
-            <CheckBox fx:id="cb_desc" disable="true" layoutX="473.0" layoutY="144.0" mnemonicParsing="false" text="Uwagi" />
+            <Label layoutX="182.0" layoutY="15.0" text="Wybierz rodzaj danych:" />
+            <ComboBox fx:id="cmb_chooseData" layoutX="182.0" layoutY="41.0" onAction="#onChooseData" prefWidth="150.0" promptText="Wybierz" />
+            <AnchorPane fx:id="ap_2" layoutX="-7.0" layoutY="54.0" prefHeight="79.0" prefWidth="579.0">
+               <children>
+                  <Label layoutX="245.0" layoutY="31.0" text="WIDOK 2" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="ap_1" layoutY="86.0" prefHeight="99.0" prefWidth="576.0">
+               <children>
+                  <RadioButton fx:id="rb_all" layoutX="10.0" layoutY="4.0" mnemonicParsing="false" onAction="#selectAll" selected="true" text="Wszystko">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="g1" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="rb_filtr" layoutX="104.0" layoutY="4.0" mnemonicParsing="false" onAction="#selectFiltr" text="Filtruj" toggleGroup="$g1" />
+                  <CheckBox fx:id="cb_color" disable="true" layoutX="18.0" layoutY="30.0" mnemonicParsing="false" text="Kolor" />
+                  <CheckBox fx:id="cb_engineSize" disable="true" layoutX="73.0" layoutY="30.0" mnemonicParsing="false" text="Poj. silnika" />
+                  <CheckBox fx:id="cb_power" disable="true" layoutX="153.0" layoutY="30.0" mnemonicParsing="false" text="Moc silnika" />
+                  <CheckBox fx:id="cb_engineType" disable="true" layoutX="246.0" layoutY="30.0" mnemonicParsing="false" text="Typ silnika" />
+                  <CheckBox fx:id="cb_vin" disable="true" layoutX="409.0" layoutY="30.0" mnemonicParsing="false" text="Nr VIN" />
+                  <CheckBox fx:id="cb_engineNum" disable="true" layoutX="333.0" layoutY="30.0" mnemonicParsing="false" text="Nr silnika" />
+                  <CheckBox fx:id="cb_year" disable="true" layoutX="475.0" layoutY="30.0" mnemonicParsing="false" text="Rok produkcji" />
+                  <CheckBox fx:id="cb_datePurch" disable="true" layoutX="17.0" layoutY="56.0" mnemonicParsing="false" text="Data zakupu" />
+                  <CheckBox fx:id="cb_price" disable="true" layoutX="113.0" layoutY="56.0" mnemonicParsing="false" text="Kwota zakupu" />
+                  <CheckBox fx:id="cb_distanceBef" disable="true" layoutX="216.0" layoutY="56.0" mnemonicParsing="false" text="Przebieg przy zakupie" />
+                  <CheckBox fx:id="cb_distanceCur" disable="true" layoutX="361.0" layoutY="56.0" mnemonicParsing="false" text="Przebieg obecny" />
+                  <CheckBox fx:id="cb_desc" disable="true" layoutX="476.0" layoutY="56.0" mnemonicParsing="false" text="Uwagi" />
+               </children>
+            </AnchorPane>
          </children>
       </AnchorPane>
    </children>

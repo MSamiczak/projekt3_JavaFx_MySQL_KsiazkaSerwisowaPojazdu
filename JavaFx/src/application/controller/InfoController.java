@@ -39,13 +39,14 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 
 public class InfoController {
 	
 	// ---- dane do maila -----
 	private static final String HOST = "smtp.gmail.com";
 	private static final int PORT = 465;
-	private static final String FROM = "javafxexc@gmail.com";
+	private static final String FROM = "";
 	private static final String PASS = "";
 	private static final String SUBJECT = "Service Book";
 	
@@ -57,6 +58,18 @@ public class InfoController {
 	@FXML
 	private ComboBox<ComboListCars> cmb_chooseCar;
 	private ObservableList<ComboListCars> cmb = FXCollections.observableArrayList();
+	
+    @FXML
+    private ComboBox<String> cmb_chooseData;
+    
+    ObservableList<String> chooseData;
+    
+    @FXML
+	private AnchorPane ap_1;
+
+	@FXML
+	private AnchorPane ap_2;
+    
 
 	@FXML
 	private TextArea ta_raport;
@@ -471,10 +484,37 @@ public class InfoController {
 		Main.getPrimaryStage().setScene(scene);
 
 	}
+	
+	
+	   @FXML
+	    void onChooseData(ActionEvent event) {
+		   
+		   if(cmb_chooseData.getValue().equals("1")) {
+			   ap_1.setVisible(true);
+			   ap_2.setVisible(false);
+			   
+		   }
+		   
+		   if(cmb_chooseData.getValue().equals("2")) {
+			   ap_2.setVisible(true);
+			   ap_1.setVisible(false);
+			   
+		   }
+
+	    }
+	
+	
+	
 
 	public void initialize() throws SQLException {
 
 		db = new DBConnector();
+		
+		ap_1.setVisible(false);
+		ap_2.setVisible(false);
+		
+		chooseData = FXCollections.observableArrayList("1","2");
+		cmb_chooseData.setItems(chooseData);
 
 		Connection connection = null;
 
