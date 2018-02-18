@@ -9,7 +9,9 @@ import java.sql.Statement;
 
 import application.Main;
 import application.database.DBConnector;
+import application.model.Cars;
 import application.model.ComboListCars;
+import application.model.ComboListGarage;
 import application.model.Garage;
 import application.model.Service;
 import javafx.collections.FXCollections;
@@ -34,15 +36,13 @@ public class ServiceController {
 	@FXML
 	private Button btn_addFixtoDB;
 
-	
-
 	@FXML
 	private ComboBox<String> cmb_chooseFix;
 	ObservableList<String> chooseFix;
 
 	@FXML
 	private ComboBox<ComboListCars> cmb_chooseCar;
-	private ObservableList<ComboListCars> cmb = FXCollections.observableArrayList();
+	private ObservableList<ComboListCars> cmbCars = FXCollections.observableArrayList();
 
 	@FXML
 	private CheckBox cb_otherFix;
@@ -51,8 +51,8 @@ public class ServiceController {
 	private TextField tf_otherFix;
 
 	@FXML
-	private ComboBox<Garage> cmb_garageList;
-	private ObservableList<Garage> garageList = FXCollections.observableArrayList();
+	private ComboBox<ComboListGarage> cmb_garageList;
+	private ObservableList<ComboListGarage> cmbGarageList = FXCollections.observableArrayList();
 
 	@FXML
 	private TextField tf_newGarageName;
@@ -99,43 +99,129 @@ public class ServiceController {
 	@FXML
 	private TextField tf_description;
 
+	LoginController lg = new LoginController();
+
+	String login = lg.login;
+	String mail = lg.mail;
+	String user_type = lg.user_type;
+
 	@FXML
 	void addFixToDB(MouseEvent event) {
 
 		Connection connection = null;
-		try {
-			connection = db.connection();
 
-			PreparedStatement ps = connection.prepareStatement("INSERT INTO service " + " VALUES ( ?,?,?,?,?,?,?)");
+		if (!cb_addNewGarage.isSelected()) {
+			try {
+				connection = db.connection();
 
-			Service service = mapToService();
-			ps.setInt(1, 0);
-			ps.setInt(2, service.getId_car());
-			ps.setString(3, service.getFix());
-			ps.setString(4, service.getDesc());
-			ps.setDouble(5, service.getCost()); // java.lang.NumberFormatException
-			ps.setString(6, service.getDate());
-			ps.setInt(7, 7);
+				PreparedStatement ps = connection.prepareStatement("INSERT INTO service " + " VALUES ( ?,?,?,?,?,?,?)");
 
-			ps.executeUpdate();
+				Service service = mapToService();
+				Garage garage = mapToGarage();
 
-			// clearAll();
+				ps.setInt(1, 0);
+				ps.setInt(2, service.getId_car());
+				ps.setString(3, service.getFix());
+				ps.setString(4, service.getDesc());
+				ps.setDouble(5, service.getCost());
+				ps.setString(6, service.getDate());
+				ps.setInt(7, garage.getId_garage());
 
-			// clearAll();
+				ps.executeUpdate();
 
-		} catch (
+				// clearAll();
 
-		SQLException e) {
-			e.printStackTrace();
-		} finally {
-			if (connection != null) {
-				try {
-					connection.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
+				// clearAll();
+
+			} catch (
+
+			SQLException e) {
+				e.printStackTrace();
+			} finally {
+				if (connection != null) {
+					try {
+						connection.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		}
+
+		if (cb_addNewGarage.isSelected()) {
+
+			Garage g = new Garage();
+			int id_garage = g.getId_garage();
+
+			try {
+				connection = db.connection();
+
+				PreparedStatement ps = connection.prepareStatement("INSERT INTO garage "
+						+ "( id_garage, name, street, num, city, phone) " + " VALUES ( ?,?,?,?,?,? );");
+
+				Garage garage = mapToGarage();
+				ps.setInt(1, garage.getId_garage());
+				ps.setString(2, garage.getGarage_name());
+				ps.setString(3, garage.getStreet());
+				ps.setString(4, garage.getNum());
+				ps.setString(5, garage.getCity());
+				ps.setString(6, garage.getPhone());
+
+				ps.executeUpdate();
+				// clearAll();
+
+				// clearAll();
+
+				String sql = "select id_garage from garage order by id_garage desc limit 1 ";
+
+				Statement ct = connection.createStatement();
+
+				ResultSet rs = ct.executeQuery(sql);
+
+				while (rs.next()) {
+
+					rs.getInt(1);
+
+					id_garage = rs.getInt(1);
+
+				}
+
+				PreparedStatement ps2 = connection
+						.prepareStatement("INSERT INTO service " + " VALUES ( ?,?,?,?,?,?,?)");
+
+				Service service = mapToService();
+
+				ps2.setInt(1, 0);
+				ps2.setInt(2, service.getId_car());
+				ps2.setString(3, service.getFix());
+				ps2.setString(4, service.getDesc());
+				ps2.setDouble(5, service.getCost());
+				ps2.setString(6, service.getDate());
+				ps2.setInt(7, id_garage);
+
+				ps2.executeUpdate();
+
+				cmbCars.clear();
+				cmbGarageList.clear();
+
+				initialize();
+			} catch (
+
+			SQLException e) {
+				e.printStackTrace();
+			} finally {
+				if (connection != null) {
+					try {
+						connection.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+
+			}
+
+		}
+
 	}
 
 	@FXML
@@ -168,19 +254,36 @@ public class ServiceController {
 
 		} else {
 
-			cmb_garageList.setDisable(false);
-			lbl_newGarageName.setVisible(false);
-			lbl_newGarageCity.setVisible(false);
-			lbl_newGarageStreet.setVisible(false);
-			lbl_newGarageAdress.setVisible(false);
-			lbl_newGaragePhone.setVisible(false);
+			if (user_type.isEmpty()) {
 
-			tf_newGarageName.setVisible(false);
-			tf_newGarageCity.setVisible(false);
-			tf_newGarageStreet.setVisible(false);
-			tf_newGarageAdress.setVisible(false);
-			tf_newGaragePhone.setVisible(false);
+				cmb_garageList.setDisable(true);
+				lbl_newGarageName.setVisible(false);
+				lbl_newGarageCity.setVisible(false);
+				lbl_newGarageStreet.setVisible(false);
+				lbl_newGarageAdress.setVisible(false);
+				lbl_newGaragePhone.setVisible(false);
 
+				tf_newGarageName.setVisible(false);
+				tf_newGarageCity.setVisible(false);
+				tf_newGarageStreet.setVisible(false);
+				tf_newGarageAdress.setVisible(false);
+				tf_newGaragePhone.setVisible(false);
+
+			} else {
+				cmb_garageList.setDisable(false);
+				lbl_newGarageName.setVisible(false);
+				lbl_newGarageCity.setVisible(false);
+				lbl_newGarageStreet.setVisible(false);
+				lbl_newGarageAdress.setVisible(false);
+				lbl_newGaragePhone.setVisible(false);
+
+				tf_newGarageName.setVisible(false);
+				tf_newGarageCity.setVisible(false);
+				tf_newGarageStreet.setVisible(false);
+				tf_newGarageAdress.setVisible(false);
+				tf_newGaragePhone.setVisible(false);
+
+			}
 		}
 
 	}
@@ -190,24 +293,42 @@ public class ServiceController {
 
 		if (cb_otherFix.isSelected()) {
 			tf_otherFix.setDisable(false);
-
 			cmb_chooseFix.setDisable(true);
 		} else {
 
-			tf_otherFix.setDisable(true);
-			tf_otherFix.clear();
-			cmb_chooseFix.setDisable(false);
+			if (user_type.isEmpty()) {
+				tf_otherFix.setDisable(true);
+				cmb_chooseFix.setDisable(true);
+
+			} else {
+
+				tf_otherFix.setDisable(true);
+				tf_otherFix.clear();
+				cmb_chooseFix.setDisable(false);
+			}
 		}
 
 	}
-	
-	
 
 	public void initialize() throws SQLException {
 
+		if (user_type.isEmpty()) {
+
+			cmb_chooseCar.setDisable(true);
+			cmb_chooseFix.setDisable(true);
+			cmb_garageList.setDisable(true);
+			btn_addFixtoDB.setDisable(true);
+
+		} else {
+
+			cmb_chooseCar.setDisable(false);
+			cmb_chooseFix.setDisable(false);
+			cmb_garageList.setDisable(false);
+			btn_addFixtoDB.setDisable(false);
+
+		}
+
 		db = new DBConnector();
-		
-		
 
 		chooseFix = FXCollections.observableArrayList("Serwis", "Przegl¹d", "Wymiana oleju", "Zakup");
 		cmb_chooseFix.setItems(chooseFix);
@@ -223,11 +344,11 @@ public class ServiceController {
 
 			while (rs.next()) {
 
-				cmb.add(new ComboListCars(rs.getInt(1), rs.getString(2), rs.getString(3)));
+				cmbCars.add(new ComboListCars(rs.getInt(1), rs.getString(2), rs.getString(3)));
 
 			}
 
-			cmb_chooseCar.setItems(cmb);
+			cmb_chooseCar.setItems(cmbCars);
 
 		} finally {
 
@@ -235,6 +356,84 @@ public class ServiceController {
 				connection.close();
 			}
 		}
+
+		try {
+			connection = db.connection();
+
+			Statement ct = connection.createStatement();
+
+			ResultSet rs = ct.executeQuery("Select id_garage, name, city from garage;");
+
+			while (rs.next()) {
+
+				cmbGarageList.add(new ComboListGarage(rs.getInt(1), rs.getString(2), rs.getString(3)));
+
+			}
+
+			cmb_garageList.setItems(cmbGarageList);
+
+		} finally {
+
+			if (connection != null) {
+				connection.close();
+			}
+		}
+
+	}
+
+	private Garage mapToGarage() throws SQLException {
+
+		Connection connection = null;
+		Garage g = new Garage();
+
+		int id_garage = g.getId_garage();
+
+		String garage_name = tf_newGarageName.getText();
+		String street = tf_newGarageStreet.getText();
+		String num = tf_newGarageAdress.getText();
+		String city = tf_newGarageCity.getText();
+		String phone = tf_newGaragePhone.getText();
+
+		if (!cb_addNewGarage.isSelected()) {
+			try {
+
+				connection = db.connection();
+
+				String choose = String.valueOf(cmb_garageList.getValue().getId_garage());
+
+				StringBuilder sql = new StringBuilder("Select id_garage from garage");
+
+				sql.append(" where");
+
+				sql.append(" id_garage = " + choose);
+
+				Statement ct = connection.createStatement();
+
+				ResultSet rs = ct.executeQuery(sql.toString());
+
+				while (rs.next()) {
+
+					rs.getInt(1);
+
+					id_garage = rs.getInt(1);
+
+					Garage gr = new Garage(id_garage);
+
+					return gr;
+				}
+
+			} finally {
+
+				if (connection != null) {
+					connection.close();
+				}
+			}
+
+		}
+
+		Garage garage = new Garage(id_garage, garage_name, street, num, city, phone);
+
+		return garage;
 
 	}
 
@@ -255,7 +454,7 @@ public class ServiceController {
 		}
 
 		String desc = tf_description.getText();
-		Double cost = Double.parseDouble(tf_cost.getText());
+		double cost = Double.parseDouble(tf_cost.getText());
 		String date = tf_date.getText();
 
 		Service s = new Service();
@@ -284,62 +483,21 @@ public class ServiceController {
 				rs.getInt(1);
 
 				id_car = rs.getInt(1);
-				System.out.println(id_car);
 
 				Service serw = new Service(id_car);
 
 				return serw;
 			}
-			System.out.println(fix);
-
-			// System.out.println(id_car);
 
 		} finally {
 
 			if (connection != null) {
 				connection.close();
 			}
-
 			Service service = new Service(id_service, id_car, fix, desc, cost, date);
 			return service;
+
 		}
 
-		// ##Kurde nie wiem
-
-		// 1. Dodanie do bazy danych do tablicy garage, 2. Pobranie z bazy danych
-		// id_garage, 3. Dodanie
-		// do tablicy service id_garage
-
-		// int id_garage;
-		//
-		// if(!cb_addNewGarage.isSelected()) {
-		// try {
-		//
-		// String chooseG = String.valueOf(cmb_garageList.getValue().getId_garage());
-		// StringBuilder sql = new StringBuilder("Select id_garage from garage");
-		//
-		// sql.append(" where");
-		//
-		// sql.append(" id_garage = " + "'" + chooseG + "'");
-		//
-		// Statement ct = connection.createStatement();
-		//
-		// ResultSet rs = ct.executeQuery(sql.toString());
-		//
-		// id_garage = rs.getInt(0);
-		//
-		// } finally {
-		//
-		// if (connection != null) {
-		// connection.close();
-		// }
-		// }
-		//
-		//
-		// }else {
-		//
-		// }
-
 	}
-
 }

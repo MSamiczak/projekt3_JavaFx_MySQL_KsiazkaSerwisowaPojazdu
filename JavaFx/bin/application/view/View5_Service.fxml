@@ -26,7 +26,7 @@
       <RowConstraints minHeight="10.0" prefHeight="106.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <MenuBar GridPane.columnSpan="5" GridPane.vgrow="ALWAYS">
+      <MenuBar visible="false" GridPane.columnSpan="5" GridPane.vgrow="ALWAYS">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>

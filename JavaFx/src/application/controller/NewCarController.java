@@ -24,6 +24,12 @@ public class NewCarController {
 
 	private DBConnector db;
 
+	LoginController lg = new LoginController();
+
+	String login = lg.login;
+	String mail = lg.mail;
+	String user_type = lg.user_type;
+
 	@FXML
 	private TextField tf_brand;
 
@@ -85,29 +91,29 @@ public class NewCarController {
 		String plate = tf_plate.getText();
 		String vin = tf_vin.getText();
 		String color = tf_color.getText();
-		
+
 		String capacitySt = tf_capacity.getText();
 		Double capacity = Double.parseDouble(capacitySt);
-		
+
 		String powerSt = tf_power.getText();
 		Double power = Double.parseDouble(powerSt);
-		
+
 		String engine_type = cmb_engineType.getValue();
 		String engine_num = tf_engineNum.getText();
-		String production_year = tf_year.getText(); 
+		String production_year = tf_year.getText();
 		String date_purchase = tf_datePur.getText();
-		
+
 		String priceSt = tf_price.getText();
 		Double price = Double.parseDouble(priceSt);
-		
+
 		String distance_purchaseSt = tf_distPur.getText();
 		Integer distance_purchase = Integer.decode(distance_purchaseSt);
 		String distance_presentSt = tf_distPresent.getText();
 		Integer distance_present = Integer.decode(distance_presentSt);
 		String desc = ta_desc.getText();
 
-		Cars cars = new Cars(idcars, brand, model, plate, vin, color, capacity, power, engine_type,
-				engine_num, production_year, date_purchase, price, distance_purchase, distance_present, desc);
+		Cars cars = new Cars(idcars, brand, model, plate, vin, color, capacity, power, engine_type, engine_num,
+				production_year, date_purchase, price, distance_purchase, distance_present, desc);
 
 		return cars;
 
@@ -116,6 +122,7 @@ public class NewCarController {
 	@FXML
 	void addToDB(MouseEvent event) {
 
+		
 		Connection connection = null;
 		try {
 			connection = db.connection();
@@ -144,8 +151,7 @@ public class NewCarController {
 			ps.setString(16, cars.getDesc());
 
 			ps.executeUpdate();
-//			clearAll();
-		
+			// clearAll();
 
 			// clearAll();
 
@@ -164,7 +170,6 @@ public class NewCarController {
 		}
 	}
 
-
 	@FXML
 	void goBack(MouseEvent event) throws IOException {
 
@@ -176,11 +181,22 @@ public class NewCarController {
 	}
 
 	public void initialize() {
+		
+		if (user_type.isEmpty()) {
+			btn_addToDB.setDisable(true);
+			
+			
+		}else {
+			
+			btn_addToDB.setDisable(false);
+		}
+		
 
 		engineType = FXCollections.observableArrayList("Benzyna", "Diesel");
 		cmb_engineType.setItems(engineType);
 
 		db = new DBConnector();
+
 
 	}
 

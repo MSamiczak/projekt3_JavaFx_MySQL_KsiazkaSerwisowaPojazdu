@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.MainController">
@@ -32,7 +33,13 @@
    <children>
       <MenuBar GridPane.columnSpan="5" GridPane.rowIndex="1">
         <menus>
-          <Menu mnemonicParsing="false" text="Konto">
+            <Menu mnemonicParsing="false" text="Logowanie">
+               <items>
+                  <MenuItem fx:id="m_login" mnemonicParsing="false" onAction="#onLog" text="Zaloguj" />
+                  <MenuItem fx:id="m_logout" mnemonicParsing="false" onAction="#outLog" text="Wyloguj" />
+                  <MenuItem fx:id="m_createAcount" mnemonicParsing="false" onAction="#onNewUser" text="Nowe konto" />
+               </items></Menu>
+          <Menu mnemonicParsing="false" text="Zarządzanie">
             <items>
                   <Menu mnemonicParsing="false" text="Zarządzanie Danymi">
                      <items>
@@ -41,29 +48,30 @@
                               <ToggleGroup fx:id="g2" />
                            </toggleGroup>
                         </RadioMenuItem>
-                        <RadioMenuItem fx:id="rmi_technicInfoTBL" mnemonicParsing="false" onAction="#goTechInfoTBL" text="Dane techniczne pojazdów" toggleGroup="$g2" />
                         <RadioMenuItem fx:id="rmi_seriviceBookTBL" mnemonicParsing="false" onAction="#goServiceTBL" text="Książka Serwisowa" toggleGroup="$g2" />
+                        <RadioMenuItem fx:id="rmi_garageTBL" mnemonicParsing="false" onAction="#goGarageTBL" text="Dane Warsztatów" toggleGroup="$g2" />
+                        <MenuItem fx:id="rmi_usersTBL" mnemonicParsing="false" onAction="#goUsersTBL" text="Dane Użytkowników" />
                      </items>
                   </Menu>
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
+          <Menu mnemonicParsing="false" text="Pomoc">
+               <items>
+                  <MenuItem fx:id="m_help" mnemonicParsing="false" onAction="#onHelp" text="Info" />
+                  <MenuItem fx:id="m_about" mnemonicParsing="false" onAction="#onAbout" text="O Autorze" />
+               </items></Menu>
         </menus>
       </MenuBar>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
          <children>
-            <Label layoutX="73.0" layoutY="23.0" text="Pojazd 1" />
-            <Label layoutX="10.0" layoutY="95.0" text="OC:" />
-            <Label layoutX="10.0" layoutY="175.0" text="Przebieg:" />
-            <Text layoutX="71.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="25-10-2018" />
-            <Text layoutX="71.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="22-12-2018" />
-            <Text layoutX="72.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0" text="123556 km" />
-            <Label layoutX="10.0" layoutY="135.0" text="Przegląd:" />
-            <Label alignment="CENTER" layoutX="72.0" layoutY="40.0" text="ASTRA III" />
+            <Label fx:id="lbl_brand1" layoutX="73.0" layoutY="41.0" text="Pojazd 1" />
+            <Label fx:id="lbl_engineType" layoutX="10.0" layoutY="95.0" prefHeight="34.0" prefWidth="58.0" text="Rodzaj &#10;silnika:" />
+            <Label fx:id="lbl_price" layoutX="10.0" layoutY="175.0" text="Cena:" />
+            <Text fx:id="txt_engineType" layoutX="99.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="25-10-2018" />
+            <Text fx:id="txt_engineSize" layoutX="99.0" layoutY="157.0" strokeType="OUTSIDE" strokeWidth="0.0" text="22-12-2018" />
+            <Text fx:id="txt_price" layoutX="100.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0" text="123556 km" />
+            <Label fx:id="lbl_engineSize" layoutX="10.0" layoutY="135.0" text="Pojemnośc &#10;silnika:" wrapText="true" />
+            <Label fx:id="lbl_model1" alignment="CENTER" layoutX="72.0" layoutY="65.0" text="ASTRA III" />
          </children>
       </AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3">
@@ -73,37 +81,27 @@
       </AnchorPane>
       <AnchorPane prefHeight="119.0" prefWidth="576.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2">
          <children>
-            <Button fx:id="btn_newCar" layoutX="14.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#goAddCar" prefHeight="75.0" prefWidth="85.0" text="Nowy pojazd +" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" wrapText="true" AnchorPane.topAnchor="27.0" />
-            <Button fx:id="btn_info" layoutX="246.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#goInfo" prefHeight="75.0" prefWidth="85.0" text="Informacje o pojazdach" textAlignment="CENTER" wrapText="true" AnchorPane.topAnchor="27.0" />
-            <Button fx:id="btn_newService" layoutX="131.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#goService" prefHeight="75.0" prefWidth="85.0" text="Nowa naprawa +" textAlignment="CENTER" wrapText="true" AnchorPane.topAnchor="27.0" />
+            <Button fx:id="btn_newCar" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#goAddCar" prefHeight="75.0" prefWidth="175.0" text="Nowy pojazd +" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" wrapText="true" AnchorPane.topAnchor="27.0">
+               <font>
+                  <Font name="Impact" size="18.0" />
+               </font></Button>
+            <Button fx:id="btn_info" layoutX="397.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#goInfo" prefHeight="75.0" prefWidth="175.0" text="Informacje o pojazdach" textAlignment="CENTER" wrapText="true" AnchorPane.topAnchor="27.0">
+               <font>
+                  <Font name="Impact" size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="btn_newService" layoutX="201.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#goService" prefHeight="75.0" prefWidth="175.0" text="Nowa naprawa +" textAlignment="CENTER" wrapText="true" AnchorPane.topAnchor="27.0">
+               <font>
+                  <Font name="Impact" size="18.0" />
+               </font>
+            </Button>
             <Button fx:id="btn_serviceHistory" layoutX="373.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#goHistory" prefHeight="75.0" prefWidth="85.0" text="Historia Serwisowa" textAlignment="CENTER" visible="false" wrapText="true" AnchorPane.topAnchor="27.0" />
          </children>
       </AnchorPane>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
-         <children>
-            <Label layoutX="73.0" layoutY="23.0" text="Pojazd 1" />
-            <Label layoutX="10.0" layoutY="95.0" text="OC:" />
-            <Label layoutX="10.0" layoutY="175.0" text="Przebieg:" />
-            <Text layoutX="71.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="25-10-2018" />
-            <Text layoutX="71.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="22-12-2018" />
-            <Text layoutX="72.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0" text="123556 km" />
-            <Label layoutX="10.0" layoutY="135.0" text="Przegląd:" />
-            <Label alignment="CENTER" layoutX="72.0" layoutY="40.0" text="ASTRA III" />
-            <Button fx:id="btn_repetitive" layoutX="78.0" layoutY="57.0" mnemonicParsing="false" onMouseClicked="#goRepetitive" prefHeight="17.0" prefWidth="61.0" text="Czynności cykliczne" textAlignment="CENTER" visible="false" wrapText="true" />
-         </children>
-      </AnchorPane>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
-         <children>
-            <Label layoutX="73.0" layoutY="23.0" text="Pojazd 1" />
-            <Label layoutX="10.0" layoutY="95.0" text="OC:" />
-            <Label layoutX="10.0" layoutY="175.0" text="Przebieg:" />
-            <Text layoutX="71.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="25-10-2018" />
-            <Text layoutX="71.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="22-12-2018" />
-            <Text layoutX="72.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0" text="123556 km" />
-            <Label layoutX="10.0" layoutY="135.0" text="Przegląd:" />
-            <Label alignment="CENTER" layoutX="72.0" layoutY="40.0" text="ASTRA III" />
-            <Button fx:id="btn_fuel" layoutX="78.0" layoutY="57.0" mnemonicParsing="false" onMouseClicked="#goFuel" prefHeight="24.0" prefWidth="57.0" text="Tankuj pojazd" textAlignment="CENTER" visible="false" wrapText="true" />
-         </children>
-      </AnchorPane>
+      <Label alignment="CENTER" prefHeight="158.0" prefWidth="203.0" text="Ostatnio dodane:" textAlignment="JUSTIFY" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
    </children>
 </GridPane>

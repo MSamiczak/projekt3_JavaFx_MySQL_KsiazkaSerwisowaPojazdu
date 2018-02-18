@@ -11,9 +11,11 @@ import java.util.Properties;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.NoSuchProviderException;
 import javax.mail.SendFailedException;
 import javax.mail.Session;
 import javax.mail.Transport;
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.swing.JFileChooser;
@@ -22,6 +24,7 @@ import application.Main;
 import application.database.DBConnector;
 import application.model.Cars;
 import application.model.ComboListCars;
+import application.model.Service;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -42,34 +45,38 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 public class InfoController {
-	
+
 	// ---- dane do maila -----
 	private static final String HOST = "smtp.gmail.com";
 	private static final int PORT = 465;
-	private static final String FROM = "";
+	private static final String FROM = "javafxexc@gmail.com";
 	private static final String PASS = "";
 	private static final String SUBJECT = "Service Book";
-	
-	
-	
 
 	private DBConnector db;
+	
+	LoginController lg = new LoginController();
+
+	String login = lg.login;
+	String mail = lg.mail;
+	String user_type = lg.user_type;
+	
+	
 
 	@FXML
 	private ComboBox<ComboListCars> cmb_chooseCar;
 	private ObservableList<ComboListCars> cmb = FXCollections.observableArrayList();
-	
-    @FXML
-    private ComboBox<String> cmb_chooseData;
-    
-    ObservableList<String> chooseData;
-    
-    @FXML
+
+	@FXML
+	private ComboBox<String> cmb_chooseData;
+
+	ObservableList<String> chooseData;
+
+	@FXML
 	private AnchorPane ap_1;
 
 	@FXML
 	private AnchorPane ap_2;
-    
 
 	@FXML
 	private TextArea ta_raport;
@@ -84,6 +91,8 @@ public class InfoController {
 	private CheckBox cb_info;
 
 	private ObservableList<Cars> cars = FXCollections.observableArrayList();
+
+	private ObservableList<Service> service = FXCollections.observableArrayList();
 
 	@FXML
 	private RadioButton rb_all;
@@ -178,6 +187,7 @@ public class InfoController {
 	void onMail(ActionEvent event) {
 
 		tf_mail.setDisable(false);
+		tf_mail.setText(mail);
 		btn_send.setDisable(false);
 
 		if (!rb_saveToFile.isSelected()) {
@@ -200,26 +210,65 @@ public class InfoController {
 		}
 
 	}
-	
+
 	@FXML
 	void saveFile(MouseEvent event) throws FileNotFoundException {
-		
-			JFileChooser fc = new JFileChooser();
-			fc.showSaveDialog(null);
-			String choice = fc.getSelectedFile().getPath();
 
-			PrintWriter zapis = new PrintWriter(choice);
+		if (!user_type.isEmpty()) {
+			
+			
+		
+		
+		
+		JFileChooser fc = new JFileChooser();
+		fc.showSaveDialog(null);
+		String choice = fc.getSelectedFile().getPath();
+
+		PrintWriter zapis = new PrintWriter(choice);
+
+		switch (cmb_chooseData.getValue()) {
+
+		case "Dane techniczne":
+
 			zapis.println(setInfoRaport());
 			zapis.close();
+			break;
+
+		case "Historia serwisu":
+
+			zapis.println(setInfoService());
+			zapis.close();
+			break;
 		}
-	
-	
+		}
+	}
+
+	// java.lang.NullPointerException -- kiedy odrzuci siê zapis
 
 	@FXML
 	void sendMail(MouseEvent event) throws MessagingException {
-		try {
-			String formData = setInfoRaport();
 
+		if (!user_type.isEmpty()) {
+		
+		if (cmb_chooseData.getValue().equals("Dane techniczne")) {
+			
+			String formData = setInfoRaport();
+			mailWithInfo(formData);
+			
+			
+		}
+		if (cmb_chooseData.getValue().equals("Historia serwisu")) {
+			String formData = setInfoService();
+			mailWithService(formData);
+		}
+
+		
+		}
+	}
+
+	private void mailWithInfo(String formData) throws MessagingException, AddressException, NoSuchProviderException {
+		try {
+	
 			Properties props = new Properties();
 			props.put("mail.transport.protocol", "smtps");
 			props.put("mail.smtps.auth", true);
@@ -242,17 +291,16 @@ public class InfoController {
 			// wysy³anie wiadomoœci
 			transport.sendMessage(message, message.getAllRecipients());
 			transport.close();
-			
+
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Informacja");
 			alert.setHeaderText("Sukces!");
 			alert.setContentText("Kopia raportu zosta³a wys³ana pod wskazany adres");
 			tf_mail.clear();
 			alert.show();
-			
-			
-		}catch(SendFailedException e) {
-			
+
+		} catch (SendFailedException e) {
+
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("B³¹d");
 			alert.setHeaderText("Nieprawid³owy adres email");
@@ -260,8 +308,50 @@ public class InfoController {
 			tf_mail.clear();
 			alert.showAndWait();
 		}
-			
+	}
+	private void mailWithService(String formData) throws MessagingException, AddressException, NoSuchProviderException {
+		try {
+	
+			Properties props = new Properties();
+			props.put("mail.transport.protocol", "smtps");
+			props.put("mail.smtps.auth", true);
+
+			// inicjalizacja sesji
+			Session mailSession = Session.getDefaultInstance(props);
+
+			// Tworzenie wiadomoœci
+			MimeMessage message = new MimeMessage(mailSession);
+			message.setSubject(SUBJECT);
+			message.setContent(formData, "text/plain; charset=UTF-8");
+
+			String to = tf_mail.getText();
+			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+
+			// ustawienie po³¹czenia
+			Transport transport = mailSession.getTransport();
+			transport.connect(HOST, PORT, FROM, PASS);
+
+			// wysy³anie wiadomoœci
+			transport.sendMessage(message, message.getAllRecipients());
+			transport.close();
+
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Informacja");
+			alert.setHeaderText("Sukces!");
+			alert.setContentText("Kopia raportu zosta³a wys³ana pod wskazany adres");
+			tf_mail.clear();
+			alert.show();
+
+		} catch (SendFailedException e) {
+
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("B³¹d");
+			alert.setHeaderText("Nieprawid³owy adres email");
+			alert.setContentText("Podaj prawid³owy email");
+			tf_mail.clear();
+			alert.showAndWait();
 		}
+	}
 	
 
 	@FXML
@@ -362,6 +452,7 @@ public class InfoController {
 					+ production_yearF + "\n# Data zakupu: " + date_purchaseF + "\n# Cena zakupu: " + priceF
 					+ "\n# Przebieg przy zakupie: " + distance_purchaseF + "\n# Przebieg obecny: " + distance_presentF
 					+ "\n# Uwagi: " + descF;
+
 		}
 
 		if (rb_filtr.isSelected()) {
@@ -426,39 +517,23 @@ public class InfoController {
 
 	@FXML
 	void doRaport(MouseEvent event) {
+		
+		if (!user_type.isEmpty()) {
 
 		Connection connection = null;
 		try {
 			connection = db.connection();
 
-			try {
-				String choose = String.valueOf(cmb_chooseCar.getValue().getIdcars());
-				StringBuilder sql = new StringBuilder("Select * from cars");
+			if (cmb_chooseData.getValue().equals("Dane techniczne")) {
 
-				sql.append(" where");
+				connection = tablica1(connection);
 
-				sql.append(" idcars = " + "'" + choose + "'");
+				// ########Druga tablica
+			}
 
-				Statement ct = connection.createStatement();
+			if (cmb_chooseData.getValue().equals("Historia serwisu")) {
+				tablica2(connection);
 
-				ResultSet rs = ct.executeQuery(sql.toString());
-				cars.clear();
-				while (rs.next()) {
-					cars.add(new Cars(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),
-							rs.getString(6), rs.getDouble(7), rs.getDouble(8), rs.getString(9), rs.getString(10),
-							rs.getString(11), rs.getString(12), rs.getDouble(13), rs.getInt(14), rs.getInt(15),
-							rs.getString(16)));
-				}
-
-				String preview = setInfoRaport();
-				ta_raport.setText(preview);
-
-			} catch (NullPointerException e) {
-				Alert alert = new Alert(AlertType.ERROR);
-				alert.setTitle("B³¹d");
-				alert.setHeaderText("Nie wybrano ¿adnego pojazdu z bazy danych");
-				alert.setContentText("Wybierz pojazd do wyœwietlenia");
-				alert.showAndWait();
 			}
 
 		} catch (SQLException e) {
@@ -472,7 +547,99 @@ public class InfoController {
 				}
 			}
 		}
+		}
+	}
 
+	private void tablica2(Connection connection) throws SQLException {
+		
+		
+		
+		// try {
+		connection = db.connection();
+
+		String choose = String.valueOf(cmb_chooseCar.getValue().getIdcars());
+
+		String sql = "select * from serviceV where id_car = " + "'" + choose + "'";
+
+		Statement ct = connection.createStatement();
+
+		ResultSet rs = ct.executeQuery(sql);
+		service.clear();
+		cars.clear();
+		while (rs.next()) {
+
+			service.add(new Service(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDouble(4),
+					rs.getString(5), rs.getString(6), rs.getString(7),rs.getString(8)));
+
+		}
+
+		String sb = setInfoService();
+		ta_raport.setText(sb);
+
+		// } catch (SQLException e) {
+		// e.printStackTrace();
+		// } finally {
+		// if (connection != null) {
+		// try {
+		// connection.close();
+		// } catch (SQLException e) {
+		// e.printStackTrace();
+		// }
+		// }
+		//
+		//
+		// }
+	}
+
+	private String setInfoService() {
+
+		StringBuilder sb = new StringBuilder();
+
+		for (int i = 0; i < service.size(); i++) {
+
+			sb.append(("#Id pojazdu: " + service.get(i).getId_car() + "#Marka: "+service.get(i).getBrand()+ "#Rodzaj naprawy: "
+					+ service.get(i).getFix() + "\n#Opis naprawy: " + service.get(i).getDesc()) + "\n\n");
+
+		}
+		return "Lista napraw:\n\n" + sb.toString();
+	}
+
+	private Connection tablica1(Connection connection) throws SQLException {
+		// try {
+		connection = db.connection();
+
+		String choose = String.valueOf(cmb_chooseCar.getValue().getIdcars());
+		String sql = "Select * from cars where idcars = " + "'" + choose + "'";
+
+		Statement ct = connection.createStatement();
+
+		ResultSet rs = ct.executeQuery(sql);
+		cars.clear();
+		service.clear();
+		while (rs.next()) {
+
+			cars.add(new Cars(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),
+					rs.getString(6), rs.getDouble(7), rs.getDouble(8), rs.getString(9), rs.getString(10),
+					rs.getString(11), rs.getString(12), rs.getDouble(13), rs.getInt(14), rs.getInt(15),
+					rs.getString(16)));
+		}
+		String preview = setInfoRaport();
+
+		ta_raport.setText(preview);
+
+		// } catch (SQLException e) {
+		// e.printStackTrace();
+		// } finally {
+		// if (connection != null) {
+		// try {
+		// connection.close();
+		// } catch (SQLException e) {
+		// e.printStackTrace();
+		// }
+		// }
+		//
+		// }
+		return connection;
 	}
 
 	@FXML
@@ -484,36 +651,47 @@ public class InfoController {
 		Main.getPrimaryStage().setScene(scene);
 
 	}
-	
-	
-	   @FXML
-	    void onChooseData(ActionEvent event) {
-		   
-		   if(cmb_chooseData.getValue().equals("1")) {
-			   ap_1.setVisible(true);
-			   ap_2.setVisible(false);
-			   
-		   }
-		   
-		   if(cmb_chooseData.getValue().equals("2")) {
-			   ap_2.setVisible(true);
-			   ap_1.setVisible(false);
-			   
-		   }
 
-	    }
-	
-	
-	
+	@FXML
+	void onChooseData(ActionEvent event) {
+
+		if (cmb_chooseData.getValue().equals("Dane techniczne")) {
+			ap_1.setVisible(true);
+			ap_2.setVisible(false);
+
+		}
+
+		if (cmb_chooseData.getValue().equals("Historia serwisu")) {
+			ap_2.setVisible(true);
+			ap_1.setVisible(false);
+
+		}
+
+	}
 
 	public void initialize() throws SQLException {
+		
+		
+		if (user_type.isEmpty()) {
+			
+			cmb_chooseData.setDisable(true);
+			
+			cmb_chooseCar.setDisable(true);
+		}else {
+			
+			cmb_chooseData.setDisable(false);
+			
+			cmb_chooseCar.setDisable(false);
+			
+		}
+		
 
 		db = new DBConnector();
-		
+
 		ap_1.setVisible(false);
 		ap_2.setVisible(false);
-		
-		chooseData = FXCollections.observableArrayList("1","2");
+
+		chooseData = FXCollections.observableArrayList("Dane techniczne", "Historia serwisu");
 		cmb_chooseData.setItems(chooseData);
 
 		Connection connection = null;
@@ -528,7 +706,6 @@ public class InfoController {
 			while (rs.next()) {
 
 				cmb.add(new ComboListCars(rs.getInt(1), rs.getString(2), rs.getString(3)));
-
 			}
 
 			cmb_chooseCar.setItems(cmb);
@@ -542,7 +719,3 @@ public class InfoController {
 	}
 
 }
-
-
-
-
